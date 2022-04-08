@@ -42,7 +42,7 @@ FRAME_THICKNESS = 2
 FONT_THINCKNESS = 1
  
 #Model de reconnaissance faciale utilisant le CPU (hog) si pas accès au GPU (cnn)
-MODEL = "cnn"
+MODEL = "hog"
 
 #Instantiation d'une variable de lecture vidéo avec la caméra a l'indice 0 (WebCam)
 #video = cv2.VideoCapture("http://192.168.1.176:8081")
