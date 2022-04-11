@@ -37,12 +37,17 @@ FACES_CONNUES_DIR = "Faces_Connues"
 #Taux de tolérance de reconnaissance faciale (de 0 à 1)
 TOLERANCE = 0.55
  
-#Paramètres visuels du cadre
+#Paramètres visuels des cadres entourant les visages
 FRAME_THICKNESS = 2
 FONT_THINCKNESS = 1
  
 #Model de reconnaissance faciale utilisant le CPU (hog) si pas accès au GPU (cnn)
+# Le mode cnn fait appel au GPU pour augmenter la reconnaissance mais n'augmente pas la rapidité
+#le mode cnn demande l'ajout de nvidia CUDA et cuDNN voir https://linuxtut.com/en/4864ff695d7599491ca8/
+# https://stackoverflow.com/questions/6622454/cuda-incompatible-with-my-gcc-version
+# https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu2004/x86_64/
 MODEL = "cnn"
+print("Modèle de reconnaissance utilisé: ", MODEL)
 
 #Instantiation d'une variable de lecture vidéo avec la caméra a l'indice 0 (WebCam)
 #video = cv2.VideoCapture("http://192.168.1.176:8081")
@@ -78,6 +83,7 @@ def detect_motion(frameCount):
 	DEFAULT = True
 	# loop over frames from the video stream
 	while True:
+		#print("Traitement frame par frame")
 		key = cv2.waitKey(1) & 0xFF
 		# read the next frame from the video stream, resize it,
 		# convert the frame to grayscale, and blur it
@@ -119,7 +125,8 @@ def detect_motion(frameCount):
 		#Encodage du présent frame
 		encodings = face_recognition.face_encodings(frame,locations)
  
-		if DEFAULT:    #Mode reconnaissance faciale activé       
+		if DEFAULT:    #Mode reconnaissance faciale activé  
+			#print("Mode standard (DEFAULT) de reconnaissance")     
 			TitreActuel = "Video"
 	  		#Pour chaque encodage et endroit d'une face dans une liste pairée de ceux-ci
 			for face_encoding, face_location in zip(encodings, locations):
